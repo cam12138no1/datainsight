@@ -9,149 +9,54 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
-    
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: 'Noto Sans SC', -apple-system, sans-serif;
-      background: #f5f5f5;
-      min-height: 100vh;
-      padding: 20px;
-      color: #333;
-      font-size: 12px;
-    }
-    
-    .page {
-      max-width: 1800px;
-      margin: 0 auto;
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      padding: 24px;
-      border-radius: 4px;
-    }
-    
-    .header {
-      border-bottom: 2px solid #c00;
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .header h1 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #c00;
-      margin-bottom: 4px;
-    }
-    
-    .header .subtitle {
-      font-size: 11px;
-      color: #666;
-    }
-    
-    .section {
-      margin-bottom: 24px;
-    }
-    
-    .section-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #c00;
-      margin-bottom: 8px;
-      padding: 4px 8px;
-      background: #fff5f5;
-      border-left: 3px solid #c00;
-    }
-    
-    .table-wrapper {
-      overflow-x: auto;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      white-space: nowrap;
-    }
-    
-    th, td {
-      padding: 4px 6px;
-      text-align: right;
-      border: 1px solid #ddd;
-    }
-    
-    th {
-      background: #f8f8f8;
-      font-weight: 600;
-      color: #333;
-      position: sticky;
-      top: 0;
-    }
-    
-    td:first-child {
-      text-align: left;
-      font-weight: 600;
-      background: #fafafa;
-      color: #c00;
-      position: sticky;
-      left: 0;
-      z-index: 2;
-      min-width: 100px;
-    }
-    
-    th.sticky-col {
-      text-align: left;
-      font-weight: 600;
-      background: #fafafa;
-      color: #c00;
-      position: sticky;
-      left: 0;
-      z-index: 3;
-      min-width: 100px;
-    }
-    
+    body { font-family: 'Noto Sans SC', -apple-system, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; color: #333; font-size: 12px; }
+    .page { max-width: 1800px; margin: 0 auto; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.1); padding: 24px; border-radius: 4px; }
+    .header { border-bottom: 2px solid #c00; padding-bottom: 12px; margin-bottom: 20px; }
+    .header h1 { font-size: 18px; font-weight: 700; color: #c00; margin-bottom: 4px; }
+    .header .subtitle { font-size: 11px; color: #666; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #c00; margin-bottom: 8px; padding: 4px 8px; background: #fff5f5; border-left: 3px solid #c00; }
+    .table-wrapper { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; }
+    th, td { padding: 4px 6px; text-align: right; border: 1px solid #ddd; }
+    th { background: #f8f8f8; font-weight: 600; color: #333; position: sticky; top: 0; }
+    td:first-child { text-align: left; font-weight: 600; background: #fafafa; color: #c00; position: sticky; left: 0; z-index: 2; min-width: 100px; }
+    th.sticky-col { text-align: left; font-weight: 600; background: #fafafa; color: #c00; position: sticky; left: 0; z-index: 3; min-width: 100px; }
     tbody tr:hover { background: #fffef5; }
-    
     .col-2024 { background: #fff9c4 !important; }
     .cell-na { color: #bbb; }
-    
-    .row-total {
-      background: #ffebee !important;
-      font-weight: 700;
-    }
+    .row-total { background: #ffebee !important; font-weight: 700; }
     .row-total td { background: #ffebee !important; }
     .row-total td:first-child { color: #c00; }
-    
-    .footer {
-      margin-top: 20px;
-      padding-top: 12px;
-      border-top: 1px solid #eee;
-      font-size: 10px;
-      color: #888;
-      text-align: center;
-    }
-    
-    .header-group {
-      background: #e3f2fd !important;
-      text-align: center !important;
-      font-weight: 700;
-      color: #1565c0;
-    }
-    
+    .footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #eee; font-size: 10px; color: #888; text-align: center; }
+    .header-group { background: #e3f2fd !important; text-align: center !important; font-weight: 700; color: #1565c0; }
     .header-forecast-q3 { background: #fff9c4 !important; }
     .header-forecast-q2 { background: #c8e6c9 !important; }
     .header-forecast-q1 { background: #ffe0b2 !important; }
-    
-    @media print {
-      body { background: #fff; padding: 0; }
-      .page { box-shadow: none; padding: 10px; }
+    .data-cell { cursor: help; }
+    .data-cell:hover { background: #e3f2fd !important; }
+    #global-tooltip {
+      position: fixed; z-index: 99999; pointer-events: none;
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d253f 100%);
+      color: #fff; padding: 14px 16px; border-radius: 10px;
+      font-size: 11px; white-space: pre-line; min-width: 340px; max-width: 500px;
+      text-align: left; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      opacity: 0; transition: opacity 0.2s ease;
+      line-height: 1.7; border: 1px solid rgba(255,255,255,0.1);
     }
+    #global-tooltip.visible { opacity: 1; }
+    #global-tooltip::after {
+      content: ''; position: absolute; top: 100%; left: 50%; margin-left: -10px;
+      border-width: 10px; border-style: solid;
+      border-color: #0d253f transparent transparent transparent;
+    }
+    @media print { body { background: #fff; padding: 0; } .page { box-shadow: none; padding: 10px; } .tooltip { display: none; } }
   </style>
 </head>
 <body>
   <div id="root"></div>
-  
   <script type="text/babel">
-    // 公司顺序：英美资源、安托法加斯塔、自由港、第一量子、嘉能可
     const COMPANIES = {
       'AAL': { name: '英美资源', region: '英国' },
       'ANTO': { name: '安托法加斯塔', region: '智利' },
@@ -159,163 +64,62 @@
       'FQM': { name: '第一量子', region: '加拿大' },
       'GLEN': { name: '嘉能可', region: '瑞士' },
     };
+    const QUARTERLY_DATA = {"AAL": {"2023": {"Q1": 17.81, "Q2": 20.91, "Q3": 20.91, "Q4": 22.99}, "2024": {"Q1": 19.81, "Q2": 19.57, "Q3": 18.13, "Q4": 19.75}, "2025": {"Q1": 16.89, "Q2": 17.3, "Q3": 18.35}}, "ANTO": {"2023": {"Q1": 14.59, "Q2": 14.96, "Q3": 17.36, "Q4": 19.15}, "2024": {"Q1": 12.94, "Q2": 15.53, "Q3": 17.9, "Q4": 20.03}, "2025": {"Q1": 15.47, "Q2": 16.01, "Q3": 16.18, "Q4": 17.7}}, "FCX": {"2023": {"Q1": 43.77, "Q2": 48.4, "Q3": 49.21, "Q4": 49.12}, "2024": {"Q1": 49.21, "Q2": 47.04, "Q3": 47.67, "Q4": 46.58}, "2025": {"Q1": 39.37, "Q2": 43.69, "Q3": 41.37, "Q4": 29.03}}, "FQM": {"2023": {"Q1": 13.88, "Q2": 18.72, "Q3": 22.16, "Q4": 16.02}, "2024": {"Q1": 10.06, "Q2": 10.27, "Q3": 11.61, "Q4": 11.16}, "2025": {"Q1": 9.97, "Q2": 9.11, "Q3": 10.46}}, "GLEN": {"2023": {"Q1": 24.41, "Q2": 24.39, "Q3": 24.78, "Q4": 27.43}, "2024": {"Q1": 23.97, "Q2": 22.29, "Q3": 24.26, "Q4": 24.64}, "2025": {"Q1": 16.79, "Q2": 17.6, "Q3": 23.96}}};
+    const QUARTERLY_SOURCES = {"AAL": {"2023": {"Q1": "📄 AAL_2023_Q1_PR.pdf\n📍 原文: \"Copper (kt)(3) | 178 | 140 | 28%\"\n📌 位置: 第1页，Production表格中\n💡 数值确认: 178 = 17.81万吨", "Q2": "📄 AAL_2023_Q2_PR.pdf\n📍 原文: \"Copper 209,100 133,900 56 % 178,100 17 % 387,200 273,400 42 %\"\n📌 位置: 第3页，Copper表格中\n💡 数值确认: 209,100 = 20.91万吨", "Q3": "📄 AAL_2023_Q3_PR.pdf\n📍 原文: \"Copper 209,100 146,800 42 % 209,100 0 % 596,300 420,200 42 %\"\n📌 位置: 第1页和第3页的Copper产量表格中\n💡 数值确认: 209,100 = 20.91万吨", "Q4": "📄 AAL_2023_Q4_PR.pdf\n📍 原文: \"Copper (kt)(2) | 230 | 244 | (6)% | 826 | 664 | 24%\"\n📌 位置: 第1页，Production表格\n💡 数值确认: 230 (kt) for Q4 2023 = 22.99万吨"}, "2024": {"Q1": "📄 AAL_2024_Q1_PR.pdf\n📍 原文: \"Copper (kt)(3) | Q1 2024: 198 | Q1 2023: 178 | % vs. Q1 2023: 11%\"\n📌 位置: 第1页，Production表格\n💡 数值确认: 198 = 19.81万吨", "Q2": "📄 AAL_2024_Q2_PR.pdf\n📍 原文: \"Copper (kt)(2) | 196 | 209 | (6)% | 198 | (1)%\"\n📌 位置: 第1页，Production表格\n💡 数值确认: 196 kt (即196,000 tonnes，报告中显示为196) = 19.57万吨", "Q3": "📄 AAL_2024_Q3_PR.pdf\n📍 原文: \"Copper 181,300 209,100 (13)% 195,700 (7)% 575,100 596,300 (4)%\"\n📌 位置: 第1页，Production表格中\n💡 数值确认: 181,300 = 18.13万吨", "Q4": "📄 AAL_2024_Q4_PR.pdf\n📍 原文: \"Copper (kt)(2) | 198 | 230 | (14)% | 773 | 730-790 | 826 | (6)%\"\n📌 位置: 第1页，Q4 2024 highlights表格\n💡 数值确认: 198 kt (Q4 2024列) = 19.75万吨"}, "2025": {"Q1": "📄 AAL_2025_Q1_PR.pdf\n📍 原文: \"Copper 168,900 198,100 (15)%\"\n📌 位置: 第6页，Copper表格中\n💡 数值确认: 168,900 = 16.89万吨", "Q2": "📄 AAL_HY25_Results_PPT.pdf\n📍 原文: \"Copper (kt)³ ... 169 Q1 2025 ... 173 Q2 2025 ... 342 H1 2025\"\n📌 位置: 第8页，Operational excellence delivering stable performance\n💡 数值确认: 173 = 17.30万吨", "Q3": "📄 AAL_2025_Q3_PR.pdf\n📍 原文: \"Copper production for the third quarter of 2025 was up 1% at 183,500 tonnes, reflecting higher production from Quellaveco and strong performance at Los Bronces, partially offset by lower production at Collahuasi.\"\n📌 位置: 第5页，Copper章节正文\n💡 数值确认: 183,500 tonnes = 18.35万吨"}}, "ANTO": {"2023": {"Q1": "📄 ANTO_2023_Q1_PR.pdf\n📍 原文: \"Copper production in Q1 2023 at 145,900 tonnes was in line with guidance, 5.1% higher than in the same quarter in 2022 and 25.4% lower than in Q4 2022.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 145,900 tonnes = 14.59万吨", "Q2": "📄 ANTO_2023_Q2_PR.pdf\n📍 原文: \"Copper production in Q2 2023 of 149,600 tonnes, 2.5% higher quarter-on-quarter (Q1 2023: 145,900 tonnes), primarily due to improving plant throughput at Los Pelambres.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 149,600 tonnes = 14.96万吨", "Q3": "📄 ANTO_2023_Q3_PR.pdf\n📍 原文: \"Copper production in Q3 2023 of 173,600 tonnes, 16.0% higher on a quarter-on-quarter basis (Q2 2023: 149,600 tonnes), principally reflecting higher output at both Los Pelambres and Centinela.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 173,600 tonnes = 17.36万吨", "Q4": "📄 ANTO_2023_Q4_PR.pdf\n📍 原文: \"Group copper production in Q4 2023 was 191,500 tonnes, 10% higher than Q3 2023, primarily related to production increases at both Los Pelambres and Centinela.\"\n📌 位置: 第1页，PRODUCTION部分第一个要点\n💡 数值确认: 191,500 tonnes = 19.15万吨"}, "2024": {"Q1": "📄 ANTO_2024_Q1_PR.pdf\n📍 原文: \"Copper production in Q1 2024 was 129,400 tonnes, 11% lower than Q1 2023, primarily due to lower grades and increased ore hardness at Centinela, in line with the mine plan, as well as maintenance and cleaning activities on the Los Pelambres concentrate pipeline that delayed moving concentrate to the ...\"\n📌 位置: 第1页，PRODUCTION部分第一个要点\n💡 数值确认: 129,400 tonnes = 12.94万吨", "Q2": "📄 ANTO_2024_Q2_PR.pdf\n📍 原文: \"Copper production in Q2 2024 was 155,300 tonnes, 20% higher than Q1 2024\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 155,300 tonnes = 15.53万吨", "Q3": "📄 ANTO_2024_Q3_PR.pdf\n📍 原文: \"Copper production in Q3 2024 was 179,000 tonnes, 15% higher on a quarter-on-quarter basis, driven by a partial destocking of inventories at Los Pelambres and an increase in copper grades and recoveries at Centinela.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 179,000 tonnes = 17.90万吨", "Q4": "📄 ANTO_2024_Q4_PR.pdf\n📍 原文: \"Copper production in Q4 2024 was 200,300 tonnes, 12% higher on a quarter-on-quarter basis, driven by increased production at all operations, particularly Centinela Concentrates.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 200,300 tonnes = 20.03万吨"}, "2025": {"Q1": "📄 ANTO_2025_Q1_PR.pdf\n📍 原文: \"Copper production Kt 154.7 129.4 19.6 154.7 200.3 (22.8)\"\n📌 位置: 第1页，GROUP PRODUCTION AND CASH COSTS表格中\n💡 数值确认: 154.7 Kt = 15.47万吨", "Q2": "📄 ANTO_2025_Q2_PR.pdf\n📍 原文: \"Copper production Kt 314.9 284.7 10.6 160.1 154.7 3.5\"\n📌 位置: 第1页，GROUP PRODUCTION AND CASH COSTS表格中\n💡 数值确认: 160.1 Kt = 16.01万吨", "Q3": "📄 ANTO_2025_Q3_PR.pdf\n📍 原文: \"Copper production in Q3 2025 was 161,800 tonnes, 1% higher quarter-on-quarter, reflecting in line production from the Group's two concentrators (Los Pelambres and Centinela Concentrates).\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 161,800 tonnes = 16.18万吨", "Q4": "📄 ANTO_2025_Q4_PR.pdf\n📍 原文: \"Copper production in Q4 2025 was 177,000 tonnes, 9% higher quarter-on-quarter, reflecting higher total copper across all four Group operations.\"\n📌 位置: 第1页，HIGHLIGHTS - PRODUCTION部分\n💡 数值确认: 177,000 tonnes = 17.70万吨"}}, "FCX": {"2023": {"Q1": "📄 FCX_1Q23_CC.pdf\n📍 原文: \"Copper\nProduction Sales Price Realization\n965 832 (1) $4.11\nmm lbs mm lbs per lb\"\n📌 位置: 第4页 (1Q 2023 Highlights)\n💡 数值确认: 965 mm lbs = 43.77万吨", "Q2": "📄 FCX_2Q23_CC.pdf\n📍 原文: \"Copper Production Sales Price Realization 1,067 1,029(1) $3.84 mm lbs mm lbs per lb\"\n📌 位置: 第3页 2Q 2023 Highlights\n💡 数值确认: 1,067 mm lbs = 48.40万吨", "Q3": "📄 FCX_2023_Q3_10Q.pdf\n📍 原文: \"Copper sales (millions of recoverable pounds) 1,048 1,048\"\n📌 位置: 第55页，North America Copper Mines Product Revenues表格，Nine Months Ended September 30, 2023\n💡 数值确认: 1,048 millions of recoverable pounds (North America only for 9 months) = 49.21万吨", "Q4": "📊 计算值\n📄 来源: FCX_4Q23_CC.pdf\n💡 Q4产量 = 年度总产量 - Q1 - Q2 - Q3 = 49.12万吨"}, "2024": {"Q1": "📄 FCX_2024_Q1_10Q.pdf\n📍 原文: \"Copper sales (millions of recoverable pounds) 493\"\n📌 位置: 第1页，Indonesia Operations Product Revenues表格，Q1 2024数据\n💡 数值确认: 493 millions of recoverable pounds = 49.21万吨", "Q2": "📄 FCX_2024_Q2_10Q.pdf\n📍 原文: \"Copper sales (millions of recoverable pounds) 293 293\"\n📌 位置: 第1页 (Page 51), North America Copper Mines Q2 2024表格\n💡 数值确认: 293 millions of recoverable pounds (North America copper mines only) = 47.04万吨", "Q3": "📄 FCX_2024_Q3_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds) Production 1,051\"\n📌 位置: 第31页，SUMMARY OPERATING DATA表格\n💡 数值确认: 1,051 millions of recoverable pounds = 47.67万吨", "Q4": "📊 计算值\n📄 来源: FCX_4Q24_CC.pdf\n💡 Q4产量 = 年度总产量 - Q1 - Q2 - Q3 = 46.58万吨"}, "2025": {"Q1": "📄 FCX_2025_Q1_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds) Production 868\"\n📌 位置: 第28页，Summary Operating Data表格中\n💡 数值确认: 868 millions of recoverable pounds = 39.37万吨", "Q2": "📄 FCX_2025_Q2_10Q.pdf\n📍 原文: \"Copper sales (millions of recoverable pounds) 293 293\"\n📌 位置: 第1页，U.S. Copper Mines Product Revenues表格，Three Months Ended June 30, 2024\n💡 数值确认: 293 millions of recoverable pounds (仅U.S. Copper Mines Q2 2024数据，非Q2 2025完整数据) = 43.69万吨", "Q3": "📄 FCX_2025_Q3_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds) Production 912\"\n📌 位置: 第30页，Summary Operating Data表格\n💡 数值确认: 912 (millions of recoverable pounds) = 41.37万吨", "Q4": "📄 FCX_2025_10K.pdf\n📍 原文: \"Consolidated production totaled 640 million pounds of copper, 65 thousand ounces of gold and 25 million pounds of molybdenum in fourth-quarter 2025\"\n📌 位置: 第1页，要点摘要部分\n💡 数值确认: 640 million pounds of copper = 29.03万吨"}}, "FQM": {"2023": {"Q1": "📄 FQM_2023_Q1_MDA.pdf\n📍 原文: \"Copper production (tonnes)¹ ... 138,753 ... 206,007 ... 182,210\"\n📌 位置: 第5页，CONSOLIDATED OPERATING HIGHLIGHTS表格\n💡 数值确认: 138,753 = 13.88万吨", "Q2": "📄 FQM_2Q23_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 187,175t 35% increase from Q1 2023 due to higher grades across three major operations\"\n📌 位置: 第4页 Q2 2023 HIGHLIGHTS\n💡 数值确认: 187,175t = 18.72万吨", "Q3": "📄 FQM_3Q23_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 221,550t 18% increase from Q2 2023 attributable to improved throughput and grades\"\n📌 位置: 第4页 Q3 2023 HIGHLIGHTS\n💡 数值确认: 221,550t = 22.16万吨", "Q4": "📄 FQM_4Q23_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 160,200t 28% decrease from Q3 2023 due to lower production at three major operations\"\n📌 位置: 第4页 Q4 2023 HIGHLIGHTS\n💡 数值确认: 160,200t = 16.02万吨"}, "2024": {"Q1": "📄 FQM_2024_Q1_MDA.pdf\n📍 原文: \"Copper production (tonnes)¹ 100,605 160,200 138,753\"\n📌 位置: 第5页，CONSOLIDATED OPERATING HIGHLIGHTS表格\n💡 数值确认: 100,605 = 10.06万吨", "Q2": "📄 FQM_2Q24_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 102,709t 2% increase from Q1 2024 driven by higher production at Kansanshi\"\n📌 位置: 第4页 Q2 2024 HIGHLIGHTS\n💡 数值确认: 102,709t = 10.27万吨", "Q3": "📄 FQM_3Q24_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 116,088t 13% increase from Q2 2024 driven by higher production at Zambian operations\"\n📌 位置: 第4页 Q3 2024 HIGHLIGHTS\n💡 数值确认: 116,088t = 11.61万吨", "Q4": "📄 FQM_4Q24_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 111,602t 4% decrease from Q3 2024 from lower production in Zambia\"\n📌 位置: 第4页 Q4 2024 HIGHLIGHTS\n💡 数值确认: 111,602t = 11.16万吨"}, "2025": {"Q1": "📄 FQM_2025_Q1_MDA.pdf\n📍 原文: \"Copper production (tonnes)1 99,703 111,602 100,605\"\n📌 位置: 第5页，CONSOLIDATED OPERATING HIGHLIGHTS表格\n💡 数值确认: 99,703 = 9.97万吨", "Q2": "📄 FQM_2Q25_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 91,069t\"\n📌 位置: 第4页 Q2 2025 HIGHLIGHTS\n💡 数值确认: 91,069t = 9.11万吨", "Q3": "📄 FQM_3Q25_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 104,626t 15% increase from Q2 2025 due to higher production\"\n📌 位置: 第4页 Q3 2025 HIGHLIGHTS\n💡 数值确认: 104,626t = 10.46万吨"}}, "GLEN": {"2023": {"Q1": "📄 GLEN_2023_Q1_PR.pdf\n📍 原文: \"Copper kt 244.1 257.8 (5)\"\n📌 位置: 第1页，Production from own sources – Total表格\n💡 数值确认: 244.1 kt = 24.41万吨", "Q2": "📄 GLEN_2023_HY_Report.pdf\n📍 原文: \"Copper kt 252.4 260.3 287.6 244.1 243.9 488.0 510.2 (4) (3)\"\n📌 位置: 第31页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 243.9 kt (Q2 2023列) = 24.39万吨", "Q3": "📄 GLEN_2023_Q3_PR.pdf\n📍 原文: \"Copper kt 260.3 287.6 244.1 243.9 247.8 735.8 770.5 (5) (5)\"\n📌 位置: 第10页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 247.8 kt (Q3 2023列) = 24.78万吨", "Q4": "📊 计算值\n📄 来源: 年度-Q1-Q2-Q3\n💡 Q4产量 = 年度总产量 - Q1 - Q2 - Q3 = 27.43万吨"}, "2024": {"Q1": "📄 GLEN_2024_Q1_PR.pdf\n📍 原文: \"Own sourced copper production of 239,700 tonnes was 2% above Q1 2023 on a like-for-like basis, removing 8,700 tonnes of Cobar (sold in June 2023) volumes from the prior period.\"\n📌 位置: 第1页，Q1 production highlights部分\n💡 数值确认: 239,700 tonnes = 23.97万吨", "Q2": "📄 GLEN_2024_HY_Report.pdf\n📍 原文: \"Copper kt 243.9 247.8 274.3 239.7 222.9 462.6 488.0 (5) (9)\"\n📌 位置: 第78页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 222.9 kt (Q2 2024列) = 22.29万吨", "Q3": "📄 GLEN_2024_Q3_PR.pdf\n📍 原文: \"Copper kt 247.8 274.3 239.7 222.9 242.6 705.2 735.8 (4) (2)\"\n📌 位置: 第9页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 242.6 kt (Q3 2024列) = 24.26万吨", "Q4": "📊 计算值\n📄 来源: 年度-Q1-Q2-Q3\n💡 Q4产量 = 年度总产量 - Q1 - Q2 - Q3 = 24.64万吨"}, "2025": {"Q1": "📄 GLEN_2025_Q1_PR.pdf\n📍 原文: \"Copper kt 167.9 239.7 (30)\"\n📌 位置: 第1页，Production from own sources – Total表格\n💡 数值确认: 167.9 kt = 16.79万吨", "Q2": "📄 GLEN_2025_HY_Report.pdf\n📍 原文: \"Copper kt 222.9 242.6 246.4 167.9 176.0 343.9 462.6 (26) (21)\"\n📌 位置: 第81页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 176.0 kt (Q2 2025列) = 17.60万吨", "Q3": "📄 GLEN_2025_Q3_PR.pdf\n📍 原文: \"Copper kt 242.6 246.4 167.9 176.0 239.6 583.5 705.2 (17) (1)\"\n📌 位置: 第10页，PRODUCTION FROM OWN SOURCES – TOTAL表格\n💡 数值确认: 239.6 (Q3 2025列) = 23.96万吨"}}};
+    const ANNUAL_DATA = {"AAL": [{"year": 2023, "production_wt": 82.62}, {"year": 2024, "production_wt": 77.27}], "ANTO": [{"year": 2022, "production_wt": 64.62}, {"year": 2023, "production_wt": 66.06}, {"year": 2024, "production_wt": 66.4}, {"year": 2025, "production_wt": 65.37}], "FCX": [{"year": 2023, "production_wt": 190.51}, {"year": 2024, "production_wt": 190.51}, {"year": 2025, "production_wt": 154.24}], "FQM": [{"year": 2022, "production_wt": 77.59}, {"year": 2023, "production_wt": 70.77}, {"year": 2024, "production_wt": 43.1}], "GLEN": [{"year": 2022, "production_wt": 105.8}, {"year": 2023, "production_wt": 101.01}, {"year": 2024, "production_wt": 95.16}, {"year": 2025, "production_wt": 85.16}]};
+    const ANNUAL_SOURCES = {"AAL": {"2023": "📄 AAL_2023_AR.pdf\n📍 原文: \"Copper (tonnes)(1) Copper production 826,200 664,500\"\n📌 位置: 第324页 (Production statistics表格)\n💡 数值确认: 826,200 = 82.62万吨", "2024": "📄 AAL_2024_AR.pdf\n📍 原文: \"Copper (tonnes)(1) Copper production 772,700 826,200\"\n📌 位置: 第42页 (Production statistics表格)\n💡 数值确认: 772,700 = 77.27万吨"}, "ANTO": {"2022": "📄 ANTO_2023_HY_Report.pdf\n📍 原文: \"Copper production volumes (tonnes) ... 646,200\"\n📌 位置: 第62页，Cash costs reconciliation表格中\n💡 数值确认: 646,200 = 64.62万吨", "2023": "📄 ANTO_2023_AR.pdf\n📍 原文: \"Copper production volumes (tonnes)¹ 660,600 646,200\"\n📌 位置: 第240页，Alternative performance measures - Cash costs表格中\n💡 数值确认: 660,600 = 66.06万吨", "2024": "📄 ANTO_2024_AR.pdf\n📍 原文: \"Group total 664.0 660.6 645.5 667.2 1.64 1.61 4.18 3.89\"\n📌 位置: 第242页，Production statistics表格\n💡 数值确认: 664.0 '000 tonnes = 66.40万吨", "2025": "📄 ANTO_2025_Q4_PR.pdf\n📍 原文: \"Copper production kt 653.7 664.0 (1.6) 177.0 161.8 9.4\"\n📌 位置: 第1页，GROUP PRODUCTION AND CASH COSTS表格\n💡 数值确认: 653.7 = 65.37万吨"}, "FCX": {"2023": "📄 FCX_4Q23_CC.pdf\n📍 原文: \"Consolidated Copper Production (bn lbs) 2021: 3.8, 2022: 4.2, 2023: 4.2\"\n📌 位置: 第4页，Sustaining Large-Scale Production / Financially Strong\n💡 数值确认: 4.2 (bn lbs) for 2023 = 190.51万吨", "2024": "📄 FCX_4Q24_CC.pdf\n📍 原文: \"Copper Production Sales Price Realization 4.2 bn lbs bn lbs per lb\"\n📌 位置: 第17页，2024 Operational and Financial Highlights\n💡 数值确认: 4.2 bn lbs = 190.51万吨", "2025": "📄 FCX_4Q25_CC.pdf\n📍 原文: \"Copper Production Sales Price Realization 3.4 3.6 $4.75 bn lbs bn lbs per lb\"\n📌 位置: 第3页 2025 Highlights\n💡 数值确认: 3.4 bn lbs (Production) = 154.24万吨"}, "FQM": {"2022": "📄 FQM_2023_Q2_MDA.pdf\n📍 原文: \"Total copper production (tonnes) 209,859 201,823 816,435 182,210 192,668 194,974 206,007 775,859 138,753 187,175 325,928\"\n📌 位置: 第6页 SUMMARY QUARTERLY INFORMATION 表格中 Copper statistics 部分\n💡 数值确认: 775,859 = 77.59万吨", "2023": "📄 FQM_2023_TSX.pdf\n📍 原文: \"Copper production for the year was 708,867 tonnes\"\n📌 位置: 该数据应在年度报告的运营概述或生产摘要部分，但在提供的财务报表注释页面中未直接显示此具体数值。基于财务数据推算：销售收入中铜收入为$5,641百万（2023年），结合铜价可推算产量，但原文中的708,867 tonnes数值需在完整年报的运营部分查找\n💡 数值确认: 708,867 tonnes (注：提供的PDF页面为财务报表注释部分，页102-142，主要包含会计政策和财务数据，铜产量的具体数值通常在年报前部的运营回顾章节) = 70.77万吨", "2024": "📄 FQM_4Q24_PPT.pdf\n📍 原文: \"TOTAL COPPER PRODUCTION 431,004t Excluding Cobre Panamá, a 14% increase from 2023 driven by higher grades\"\n📌 位置: 第5页 FULL YEAR 2024 HIGHLIGHTS\n💡 数值确认: 431,004t = 43.10万吨"}, "GLEN": {"2022": "📄 GLEN_2023_HY_Report.pdf\n📍 原文: \"Copper kt 1,258 1,196 1,058 1,040 ± 30 1,040 ± 30 47% 53%\"\n📌 位置: 第38页，FULL YEAR 2023 PRODUCTION GUIDANCE表格\n💡 数值确认: 1,058 (Actual FY 2022列) = 105.80万吨", "2023": "📄 GLEN_2023_AR.pdf\n📍 原文: \"Copper kt 287.6 244.1 243.9 247.8 274.3 1,010.1 1,058.1 (5) (5)\"\n📌 位置: 第290页，Production from own sources – Total表格\n💡 数值确认: 1,010.1 kt = 101.01万吨", "2024": "📄 GLEN_2024_AR.pdf\n📍 原文: \"Copper kt 274.3 239.7 222.9 242.6 246.4 951.6 1,010.1 (6) (10)\"\n📌 位置: 第15页 (PDF page 263), Production from own sources – Total 表格\n💡 数值确认: 951.6 kt (2024年全年) = 95.16万吨", "2025": "📄 GLEN_2025_FY_PR.pdf\n📍 原文: \"Copper kt 507.7 343.9 48 851.6 951.6 (11)\"\n📌 位置: 第1页，Production from own sources – Total表格\n💡 数值确认: 851.6 kt = 85.16万吨"}};
+    const FORECAST_DATA = {"AAL": [{"report_quarter": "2023Q1", "forecast_year": 2023, "production_wt": 88.5}, {"report_quarter": "2023Q4", "forecast_year": 2024, "production_wt": 76.0}, {"report_quarter": "2024Q1", "forecast_year": 2024, "production_wt": 76.0}, {"report_quarter": "2024Q2", "forecast_year": 2024, "production_wt": 76.0}, {"report_quarter": "2024Q4", "forecast_year": 2025, "production_wt": 72.0}, {"report_quarter": "2024Q4", "forecast_year": 2026, "production_wt": 79.0}, {"report_quarter": "2024Q4", "forecast_year": 2027, "production_wt": 79.0}, {"report_quarter": "2025Q1", "forecast_year": 2025, "production_wt": 72.0}, {"report_quarter": "2025Q2", "forecast_year": 2025, "production_wt": 72.0}, {"report_quarter": "2025Q2", "forecast_year": 2026, "production_wt": 79.0}, {"report_quarter": "2025Q2", "forecast_year": 2027, "production_wt": 79.0}, {"report_quarter": "2025Q3", "forecast_year": 2025, "production_wt": 72.0}], "ANTO": [{"report_quarter": "2023Q1", "forecast_year": 2023, "production_wt": 69.0}, {"report_quarter": "2023Q3", "forecast_year": 2024, "production_wt": 69.0}, {"report_quarter": "2023Q4", "forecast_year": 2024, "production_wt": 69.0}, {"report_quarter": "2024Q3", "forecast_year": 2025, "production_wt": 68.0}, {"report_quarter": "2024Q4", "forecast_year": 2025, "production_wt": 68.0}, {"report_quarter": "2025Q1", "forecast_year": 2025, "production_wt": 68.0}, {"report_quarter": "2025Q2", "forecast_year": 2025, "production_wt": 68.0}, {"report_quarter": "2025Q3", "forecast_year": 2026, "production_wt": 67.5}, {"report_quarter": "2025Q4", "forecast_year": 2026, "production_wt": 67.5}], "FCX": [{"report_quarter": "2023Q1", "forecast_year": 2023, "production_wt": 184.07}, {"report_quarter": "2023Q2", "forecast_year": 2024, "production_wt": 190.51}, {"report_quarter": "2023Q2", "forecast_year": 2025, "production_wt": 190.51}, {"report_quarter": "2023Q4", "forecast_year": 2024, "production_wt": 186.06}, {"report_quarter": "2023Q4", "forecast_year": 2025, "production_wt": 190.51}, {"report_quarter": "2023Q4", "forecast_year": 2026, "production_wt": 195.05}, {"report_quarter": "2024Q3", "forecast_year": 2024, "production_wt": 184.0}, {"report_quarter": "2025Q3", "forecast_year": 2025, "production_wt": 158.76}], "FQM": [{"report_quarter": "2023Q1", "forecast_year": 2023, "production_wt": 80.5}, {"report_quarter": "2023Q4", "forecast_year": 2024, "production_wt": 39.5}, {"report_quarter": "2023Q4", "forecast_year": 2025, "production_wt": 43.0}, {"report_quarter": "2023Q4", "forecast_year": 2026, "production_wt": 43.0}, {"report_quarter": "2024Q1", "forecast_year": 2024, "production_wt": 39.5}, {"report_quarter": "2024Q4", "forecast_year": 2025, "production_wt": 41.0}, {"report_quarter": "2024Q4", "forecast_year": 2026, "production_wt": 42.0}, {"report_quarter": "2024Q4", "forecast_year": 2027, "production_wt": 46.0}, {"report_quarter": "2025Q1", "forecast_year": 2025, "production_wt": 41.0}], "GLEN": [{"report_quarter": "2023Q1", "forecast_year": 2023, "production_wt": 104.0}, {"report_quarter": "2023Q2", "forecast_year": 2023, "production_wt": 104.0}, {"report_quarter": "2023Q3", "forecast_year": 2023, "production_wt": 104.0}, {"report_quarter": "2024Q1", "forecast_year": 2024, "production_wt": 98.0}, {"report_quarter": "2024Q2", "forecast_year": 2024, "production_wt": 98.0}, {"report_quarter": "2024Q3", "forecast_year": 2024, "production_wt": 98.0}, {"report_quarter": "2025Q1", "forecast_year": 2025, "production_wt": 88.0}, {"report_quarter": "2025Q2", "forecast_year": 2025, "production_wt": 87.0}, {"report_quarter": "2025Q3", "forecast_year": 2025, "production_wt": 86.25}]};
+    const FORECAST_SOURCES = {"AAL": {"2023Q1-2023": "📄 AAL_2023_Q1_PR.pdf\n📍 原文: \"Copper(3) | 840–930 kt | c.156 c/lb\"\n📌 位置: 第2页，Production and unit cost guidance summary表格中\n💡 数值确认: 840–930 kt = 88.50万吨", "2023Q4-2024": "📄 AAL_2023_Q4_PR.pdf\n📍 原文: \"Copper(2) | 730-790 kt | c.157 c/lb\"\n📌 位置: 第2页，Production and unit cost guidance summary表格\n💡 数值确认: 730-790 kt = 76.00万吨", "2024Q1-2024": "📄 AAL_2024_Q1_PR.pdf\n📍 原文: \"Copper(2) | 2024 production guidance: 730–790 kt | 2024 unit cost guidance(1): c.157 c/lb\"\n📌 位置: 第2页，Production and unit cost guidance summary表格\n💡 数值确认: 730–790 kt = 76.00万吨", "2024Q2-2024": "📄 AAL_2024_Q2_PR.pdf\n📍 原文: \"Production guidance for 2024 is unchanged at 730,000–790,000 tonnes (Chile 430,000-460,000 tonnes; Peru 300,000-330,000 tonnes).\"\n📌 位置: 第4页，2024 Guidance部分\n💡 数值确认: 730,000–790,000 tonnes = 76.00万吨", "2024Q4-2025": "📄 AAL_2024_Q4_PR.pdf\n📍 原文: \"Copper(1) | 690–750 kt | 760–820 kt | 760-820 kt\"\n📌 位置: 第3页，Production guidance for 2025 to 2027表格\n💡 数值确认: 690–750 kt (2025列) = 72.00万吨", "2024Q4-2026": "📄 AAL_2024_Q4_PR.pdf\n📍 原文: \"Copper(1) | 690–750 kt | 760–820 kt | 760-820 kt\"\n📌 位置: 第3页，Production guidance for 2025 to 2027表格\n💡 数值确认: 760–820 kt (2026列) = 79.00万吨", "2024Q4-2027": "📄 AAL_2024_Q4_PR.pdf\n📍 原文: \"Copper(1) | 690–750 kt | 760–820 kt | 760-820 kt\"\n📌 位置: 第3页，Production guidance for 2025 to 2027表格\n💡 数值确认: 760-820 kt (2027(new)列) = 79.00万吨", "2025Q1-2025": "📄 AAL_2025_Q1_PR.pdf\n📍 原文: \"Copper(3) 690–750 kt c.151 c/lb\"\n📌 位置: 第3页，Production and unit cost guidance summary for 2025表格中\n💡 数值确认: 690–750 kt = 72.00万吨", "2025Q2-2025": "📄 AAL_HY25_Results_PPT.pdf\n📍 原文: \"Copper¹ kt 826 2023 773 2024 342 H1 2025 690-750 2025F 760-820 2026F 760-820 2027F\"\n📌 位置: 第40页，Production outlook – continuing operations表格\n💡 数值确认: 690-750 = 72.00万吨", "2025Q2-2026": "📄 AAL_HY25_Results_PPT.pdf\n📍 原文: \"Copper¹ kt 826 2023 773 2024 342 H1 2025 690-750 2025F 760-820 2026F 760-820 2027F\"\n📌 位置: 第40页，Production outlook – continuing operations表格\n💡 数值确认: 760-820 = 79.00万吨", "2025Q2-2027": "📄 AAL_HY25_Results_PPT.pdf\n📍 原文: \"Copper¹ kt 826 2023 773 2024 342 H1 2025 690-750 2025F 760-820 2026F 760-820 2027F\"\n📌 位置: 第40页，Production outlook – continuing operations表格\n💡 数值确认: 760-820 = 79.00万吨", "2025Q3-2025": "📄 AAL_2025_Q3_PR.pdf\n📍 原文: \"Copper(3) 690–750 kt c.151 c/lb\"\n📌 位置: 第2页，Production and unit cost guidance summary for 2025表格\n💡 数值确认: 690–750 kt = 72.00万吨"}, "ANTO": {"2023Q1-2023": "📄 ANTO_2023_Q1_PR.pdf\n📍 原文: \"Guidance for the year is unchanged. Group copper production for the full year is expected to be 670-710,000 tonnes, increasing through the year\"\n📌 位置: 第2页，2023 GUIDANCE部分\n💡 数值确认: 670-710,000 tonnes = 69.00万吨", "2023Q3-2024": "📄 ANTO_2023_Q3_PR.pdf\n📍 原文: \"In 2024 copper production is expected to be between 670,000 and 710,000 tonnes, with the increase in production principally reflecting the progress with the Phase 1 Expansion at Los Pelambres.\"\n📌 位置: 第2页，GUIDANCE部分\n💡 数值确认: 670,000 and 710,000 tonnes = 69.00万吨", "2023Q4-2024": "📄 ANTO_2023_Q4_PR.pdf\n📍 原文: \"As previously announced, Group production in 2024 is expected to be 670-710,000 tonnes of copper.\"\n📌 位置: 第2页，2024 GUIDANCE部分第一个要点\n💡 数值确认: 670-710,000 tonnes = 69.00万吨", "2024Q3-2025": "📄 ANTO_2024_Q3_PR.pdf\n📍 原文: \"Total full-year Group copper production in 2025 is expected to be between 660,000 and 700,000 tonnes, with an incremental gain in production at Centinela Concentrates.\"\n📌 位置: 第2页，GUIDANCE部分\n💡 数值确认: 660,000 and 700,000 tonnes = 68.00万吨", "2024Q4-2025": "📄 ANTO_2024_Q4_PR.pdf\n📍 原文: \"Full year production guidance for 2025 is expected to be between 660,000 and 700,000 tonnes\"\n📌 位置: 第1页，CEO引言部分\n💡 数值确认: 660,000 and 700,000 tonnes = 68.00万吨", "2025Q1-2025": "📄 ANTO_2025_Q1_PR.pdf\n📍 原文: \"Full year guidance is maintained, with Group production expected to be between 660,000 and 700,000 tonnes, which assumes a full 12 months of production at Zaldívar.\"\n📌 位置: 第1页，CEO引言部分\n💡 数值确认: 660,000 and 700,000 tonnes = 68.00万吨", "2025Q2-2025": "📄 ANTO_2025_HY_Report.pdf\n📍 原文: \"Full year guidance is maintained, with total Group production for 2025 expected to be in the range of 660–700,000 tonnes, with cash cost and capex guidance as previously disclosed.\"\n📌 位置: 第1页，HIGHLIGHTS部分\n💡 数值确认: 660–700,000 tonnes = 68.00万吨", "2025Q3-2026": "📄 ANTO_2025_Q3_PR.pdf\n📍 原文: \"Total full-year Group copper production in 2026 is expected to be between 650,000 and 700,000 tonnes, with an incremental year-on-year gain in production expected at Los Pelambres.\"\n📌 位置: 第2页，FY 2026 GUIDANCE部分\n💡 数值确认: 650,000 and 700,000 tonnes = 67.50万吨", "2025Q4-2026": "📄 ANTO_2025_Q4_PR.pdf\n📍 原文: \"Copper production in 2026 is expected to be 650,000-700,000 tonnes, which includes an incremental increase in output at Los Pelambres related to higher copper grades.\"\n📌 位置: 第1页，CEO引言部分\n💡 数值确认: 650,000-700,000 tonnes = 67.50万吨"}, "FCX": {"2023Q1-2023": "📄 FCX_2023_Q1_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds): North America copper mines 1,382, South America mining 1,222, Indonesia mining 1,453, Total 4,057\"\n📌 位置: 第22页，Outlook部分，Consolidated Sales Volumes表格\n💡 数值确认: Total 4,057 millions of recoverable pounds = 184.07万吨", "2023Q2-2024": "📄 FCX_2Q23_CC.pdf\n📍 原文: \"Copper Sales (billion lbs) 4.0 2023e* 4.2 2024e* 4.2 2025e\"\n📌 位置: 第7页 Annual Sales Profile\n💡 数值确认: 4.2 (billion lbs) for 2024e = 190.51万吨", "2023Q2-2025": "📄 FCX_2Q23_CC.pdf\n📍 原文: \"Copper Sales (billion lbs) 4.0 2023e* 4.2 2024e* 4.2 2025e\"\n📌 位置: 第7页 Annual Sales Profile\n💡 数值确认: 4.2 (billion lbs) for 2025e = 190.51万吨", "2023Q4-2024": "📄 FCX_4Q23_CC.pdf\n📍 原文: \"Copper Sales (billion lbs) ... 4.1 ... 2024e\"\n📌 位置: 第13页 Annual Sales Profile图表\n💡 数值确认: 4.1 billion lbs for 2024e = 186.06万吨", "2023Q4-2025": "📄 FCX_4Q23_CC.pdf\n📍 原文: \"Copper Sales (billion lbs) ... 4.2 ... 2025e\"\n📌 位置: 第13页 Annual Sales Profile图表\n💡 数值确认: 4.2 billion lbs for 2025e = 190.51万吨", "2023Q4-2026": "📄 FCX_4Q23_CC.pdf\n📍 原文: \"Copper Sales (billion lbs) ... 4.3 ... 2026e\"\n📌 位置: 第13页 Annual Sales Profile图表\n💡 数值确认: 4.3 billion lbs for 2026e = 195.05万吨", "2024Q3-2024": "📄 FCX_2024_Q3_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds): North America copper mines 1,240, South America operations 1,170, Indonesia operations 1,645, Total 4,055\"\n📌 位置: 第27页，Consolidated Sales Volumes部分\n💡 数值确认: Total 4,055 millions of recoverable pounds = 184.00万吨", "2025Q3-2025": "📄 FCX_2025_Q3_10Q.pdf\n📍 原文: \"Copper (millions of recoverable pounds): U.S. copper mines 1,289; South America operations 1,058; Indonesia operations 1,153; Total 3,500\"\n📌 位置: 第26页，Consolidated Sales Volumes部分\n💡 数值确认: Total 3,500 (millions of recoverable pounds) = 158.76万吨"}, "FQM": {"2023Q1-2023": "📄 FQM_2023_Q1_MDA.pdf\n📍 原文: \"PRODUCTION GUIDANCE\n000's ... 2023\nCopper (tonnes) ... 770 – 840\"\n📌 位置: 第10页，PRODUCTION GUIDANCE表格\n💡 数值确认: 770 – 840 = 80.50万吨", "2023Q4-2024": "📄 FQM_4Q23_PPT.pdf\n📍 原文: \"Copper production (K tonnes) 370 - 420 400 - 460 400 - 460\"\n📌 位置: 第27页 THREE-YEAR GUIDANCE 表格\n💡 数值确认: 370 - 420 = 39.50万吨", "2023Q4-2025": "📄 FQM_4Q23_PPT.pdf\n📍 原文: \"Copper production (K tonnes) 370 - 420 400 - 460 400 - 460\"\n📌 位置: 第27页 THREE-YEAR GUIDANCE 表格，2025E列\n💡 数值确认: 400 - 460 = 43.00万吨", "2023Q4-2026": "📄 FQM_4Q23_PPT.pdf\n📍 原文: \"Copper production (K tonnes) 370 - 420 400 - 460 400 - 460\"\n📌 位置: 第27页 THREE-YEAR GUIDANCE 表格，2026E列\n💡 数值确认: 400 - 460 = 43.00万吨", "2024Q1-2024": "📄 FQM_2024_Q1_MDA.pdf\n📍 原文: \"Copper (tonnes) 370 – 420\"\n📌 位置: 第11页，PRODUCTION GUIDANCE表格\n💡 数值确认: 370 – 420 = 39.50万吨", "2024Q4-2025": "📄 FQM_4Q24_PPT.pdf\n📍 原文: \"Copper production (K tonnes) 380 – 440\"\n📌 位置: 第41页 THREE-YEAR GUIDANCE - PRODUCTION GUIDANCE表格\n💡 数值确认: 380 – 440 = 41.00万吨", "2024Q4-2026": "📄 FQM_4Q24_PPT.pdf\n📍 原文: \"Copper production (K tonnes) ... 390 – 450\"\n📌 位置: 第41页 THREE-YEAR GUIDANCE - PRODUCTION GUIDANCE表格，2026E列\n💡 数值确认: 390 – 450 = 42.00万吨", "2024Q4-2027": "📄 FQM_4Q24_PPT.pdf\n📍 原文: \"Copper production (K tonnes) ... 430 – 490\"\n📌 位置: 第41页 THREE-YEAR GUIDANCE - PRODUCTION GUIDANCE表格，2027E列\n💡 数值确认: 430 – 490 = 46.00万吨", "2025Q1-2025": "📄 FQM_2025_Q1_MDA.pdf\n📍 原文: \"Copper (tonnes) 380 – 440\"\n📌 位置: 第8页，PRODUCTION GUIDANCE表格\n💡 数值确认: 380 – 440 = 41.00万吨"}, "GLEN": {"2023Q1-2023": "📄 GLEN_2023_Q1_PR.pdf\n📍 原文: \"Copper kt 1,058 1,040 ± 30 1,040 ± 30 48% 52%\"\n📌 位置: 第1页，Production guidance表格\n💡 数值确认: 1,040 ± 30 kt = 104.00万吨", "2023Q2-2023": "📄 GLEN_2023_HY_Report.pdf\n📍 原文: \"Copper kt 1,258 1,196 1,058 1,040 ± 30 1,040 ± 30 47% 53%\"\n📌 位置: 第38页，FULL YEAR 2023 PRODUCTION GUIDANCE表格\n💡 数值确认: 1,040 ± 30 (Current guidance 2023列) = 104.00万吨", "2023Q3-2023": "📄 GLEN_2023_Q3_PR.pdf\n📍 原文: \"Copper kt 1,258 1,196 1,058 1,040 ± 30 1,040 ± 30\"\n📌 位置: 第2页/第15页，Production guidance表格\n💡 数值确认: 1,040 ± 30 kt (Guidance FY 2023) = 104.00万吨", "2024Q1-2024": "📄 GLEN_2024_Q1_PR.pdf\n📍 原文: \"Copper kt 1,010 950-1,010 950-1,010 50% 50%\"\n📌 位置: 第1页，Production guidance表格\n💡 数值确认: 950-1,010 = 98.00万吨", "2024Q2-2024": "📄 GLEN_2024_HY_Report.pdf\n📍 原文: \"Copper kt 1,196 1,058 1,010 950-1,010 950-1,010 47% 53%\"\n📌 位置: 第83页，FULL YEAR 2024 PRODUCTION GUIDANCE表格\n💡 数值确认: 950-1,010 (Current guidance 2024列) = 98.00万吨", "2024Q3-2024": "📄 GLEN_2024_Q3_PR.pdf\n📍 原文: \"Copper kt 1,010 950-1,010 950-1,010 Lower end\"\n📌 位置: 第14页，FULL YEAR 2024 PRODUCTION GUIDANCE表格\n💡 数值确认: 950-1,010 kt = 98.00万吨", "2025Q1-2025": "📄 GLEN_2025_Q1_PR.pdf\n📍 原文: \"Copper kt 951.6 850-910 850-910 42% 58%\"\n📌 位置: 第2页，Production guidance表格\n💡 数值确认: 850-910 kt = 88.00万吨", "2025Q2-2025": "📄 GLEN_2025_HY_Report.pdf\n📍 原文: \"Copper kt 951.6 850-910 850-890 40% 60%\"\n📌 位置: 第86页，FULL YEAR 2025 PRODUCTION GUIDANCE表格\n💡 数值确认: 850-890 (Current guidance 2025列) = 87.00万吨", "2025Q3-2025": "📄 GLEN_2025_Q3_PR.pdf\n📍 原文: \"Copper kt 951.6 850-890 850-875\"\n📌 位置: 第2页，2025 production guidance表格\n💡 数值确认: 850-875 = 86.25万吨"}};
+
+    // 全局tooltip管理
+    const TooltipContext = React.createContext();
     
-    // 静态数据 - 季度产量 (57条) - 严格来自数据库
-    const QUARTERLY_DATA = {
-      "AAL": {
-        2023: { "Q1": 17.81, "Q2": 20.91, "Q3": 20.91, "Q4": 22.99 },
-        2024: { "Q1": 19.81, "Q2": 19.57, "Q3": 18.13, "Q4": 19.75 },
-        2025: { "Q1": 16.89, "Q2": 17.30, "Q3": 18.35 }
-      },
-      "ANTO": {
-        2023: { "Q1": 14.59, "Q2": 14.96, "Q3": 17.36, "Q4": 19.15 },
-        2024: { "Q1": 12.94, "Q2": 15.53, "Q3": 17.90, "Q4": 20.03 },
-        2025: { "Q1": 15.47, "Q2": 16.01, "Q3": 16.18, "Q4": 17.70 }
-      },
-      "FCX": {
-        2023: { "Q1": 43.77, "Q2": 48.40, "Q3": 49.21, "Q4": 49.12 },
-        2024: { "Q1": 49.21, "Q2": 47.04, "Q3": 47.67, "Q4": 46.58 },
-        2025: { "Q1": 39.37, "Q2": 43.69, "Q3": 41.37, "Q4": 29.03 }
-      },
-      "FQM": {
-        2023: { "Q1": 13.88, "Q2": 18.72, "Q3": 22.16, "Q4": 16.02 },
-        2024: { "Q1": 10.06, "Q2": 10.27, "Q3": 11.61, "Q4": 11.16 },
-        2025: { "Q1": 9.97, "Q2": 9.11, "Q3": 10.46 }
-      },
-      "GLEN": {
-        2023: { "Q1": 24.41, "Q2": 24.39, "Q3": 24.78, "Q4": 27.43 },
-        2024: { "Q1": 23.97, "Q2": 22.29, "Q3": 24.26, "Q4": 24.64 },
-        2025: { "Q1": 16.79, "Q2": 17.60, "Q3": 23.96 }
-      }
-    };
+    function TooltipProvider({ children }) {
+      const [tip, setTip] = React.useState({ visible: false, text: '', x: 0, y: 0 });
+      const show = React.useCallback((text, e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top - 12;
+        setTip({ visible: true, text, x, y });
+      }, []);
+      const hide = React.useCallback(() => setTip(t => ({ ...t, visible: false })), []);
+      return (
+        <TooltipContext.Provider value={{ show, hide }}>
+          {children}
+          {tip.visible && ReactDOM.createPortal(
+            <div id="global-tooltip" className="visible" style={{
+              left: Math.max(200, Math.min(tip.x, window.innerWidth - 280)) + 'px',
+              bottom: (window.innerHeight - tip.y) + 'px',
+              transform: 'translateX(-50%)'
+            }}>{tip.text}</div>,
+            document.body
+          )}
+        </TooltipContext.Provider>
+      );
+    }
     
-    // 静态数据 - 年度产量 (16条) - 严格来自数据库
-    const ANNUAL_DATA = {
-      "AAL": [
-        { year: 2023, production_wt: 82.62 },
-        { year: 2024, production_wt: 77.27 }
-      ],
-      "ANTO": [
-        { year: 2022, production_wt: 64.62 },
-        { year: 2023, production_wt: 66.06 },
-        { year: 2024, production_wt: 66.40 },
-        { year: 2025, production_wt: 65.37 }
-      ],
-      "FCX": [
-        { year: 2023, production_wt: 190.51 },
-        { year: 2024, production_wt: 190.51 },
-        { year: 2025, production_wt: 154.24 }
-      ],
-      "FQM": [
-        { year: 2022, production_wt: 77.59 },
-        { year: 2023, production_wt: 70.77 },
-        { year: 2024, production_wt: 43.10 }
-      ],
-      "GLEN": [
-        { year: 2022, production_wt: 105.80 },
-        { year: 2023, production_wt: 101.01 },
-        { year: 2024, production_wt: 95.16 },
-        { year: 2025, production_wt: 85.16 }
-      ]
-    };
-    
-    // 静态数据 - 预测数据 (47条) - 严格来自数据库
-    const FORECAST_DATA = {
-      "AAL": [
-        { report_quarter: "2023Q1", forecast_year: 2023, production_wt: 88.50 },
-        { report_quarter: "2023Q4", forecast_year: 2024, production_wt: 76.00 },
-        { report_quarter: "2024Q1", forecast_year: 2024, production_wt: 76.00 },
-        { report_quarter: "2024Q2", forecast_year: 2024, production_wt: 76.00 },
-        { report_quarter: "2024Q4", forecast_year: 2025, production_wt: 72.00 },
-        { report_quarter: "2024Q4", forecast_year: 2026, production_wt: 79.00 },
-        { report_quarter: "2024Q4", forecast_year: 2027, production_wt: 79.00 },
-        { report_quarter: "2025Q1", forecast_year: 2025, production_wt: 72.00 },
-        { report_quarter: "2025Q2", forecast_year: 2025, production_wt: 72.00 },
-        { report_quarter: "2025Q2", forecast_year: 2026, production_wt: 79.00 },
-        { report_quarter: "2025Q2", forecast_year: 2027, production_wt: 79.00 },
-        { report_quarter: "2025Q3", forecast_year: 2025, production_wt: 72.00 }
-      ],
-      "ANTO": [
-        { report_quarter: "2023Q1", forecast_year: 2023, production_wt: 69.00 },
-        { report_quarter: "2023Q3", forecast_year: 2024, production_wt: 69.00 },
-        { report_quarter: "2023Q4", forecast_year: 2024, production_wt: 69.00 },
-        { report_quarter: "2024Q3", forecast_year: 2025, production_wt: 68.00 },
-        { report_quarter: "2024Q4", forecast_year: 2025, production_wt: 68.00 },
-        { report_quarter: "2025Q1", forecast_year: 2025, production_wt: 68.00 },
-        { report_quarter: "2025Q2", forecast_year: 2025, production_wt: 68.00 },
-        { report_quarter: "2025Q3", forecast_year: 2026, production_wt: 67.50 },
-        { report_quarter: "2025Q4", forecast_year: 2026, production_wt: 67.50 }
-      ],
-      "FCX": [
-        { report_quarter: "2023Q1", forecast_year: 2023, production_wt: 184.07 },
-        { report_quarter: "2023Q2", forecast_year: 2024, production_wt: 190.51 },
-        { report_quarter: "2023Q2", forecast_year: 2025, production_wt: 190.51 },
-        { report_quarter: "2023Q4", forecast_year: 2024, production_wt: 186.06 },
-        { report_quarter: "2023Q4", forecast_year: 2025, production_wt: 190.51 },
-        { report_quarter: "2023Q4", forecast_year: 2026, production_wt: 195.05 },
-        { report_quarter: "2024Q3", forecast_year: 2024, production_wt: 184.00 },
-        { report_quarter: "2025Q3", forecast_year: 2025, production_wt: 158.76 }
-      ],
-      "FQM": [
-        { report_quarter: "2023Q1", forecast_year: 2023, production_wt: 80.50 },
-        { report_quarter: "2023Q4", forecast_year: 2024, production_wt: 39.50 },
-        { report_quarter: "2023Q4", forecast_year: 2025, production_wt: 43.00 },
-        { report_quarter: "2023Q4", forecast_year: 2026, production_wt: 43.00 },
-        { report_quarter: "2024Q1", forecast_year: 2024, production_wt: 39.50 },
-        { report_quarter: "2024Q4", forecast_year: 2025, production_wt: 41.00 },
-        { report_quarter: "2024Q4", forecast_year: 2026, production_wt: 42.00 },
-        { report_quarter: "2024Q4", forecast_year: 2027, production_wt: 46.00 },
-        { report_quarter: "2025Q1", forecast_year: 2025, production_wt: 41.00 }
-      ],
-      "GLEN": [
-        { report_quarter: "2023Q1", forecast_year: 2023, production_wt: 104.00 },
-        { report_quarter: "2023Q2", forecast_year: 2023, production_wt: 104.00 },
-        { report_quarter: "2023Q3", forecast_year: 2023, production_wt: 104.00 },
-        { report_quarter: "2024Q1", forecast_year: 2024, production_wt: 98.00 },
-        { report_quarter: "2024Q2", forecast_year: 2024, production_wt: 98.00 },
-        { report_quarter: "2024Q3", forecast_year: 2024, production_wt: 98.00 },
-        { report_quarter: "2025Q1", forecast_year: 2025, production_wt: 88.00 },
-        { report_quarter: "2025Q2", forecast_year: 2025, production_wt: 87.00 },
-        { report_quarter: "2025Q3", forecast_year: 2025, production_wt: 86.25 }
-      ]
-    };
-    
-    // 年度产量 + 预测矩阵表格
+    function DataCell({ value, source, className }) {
+      const { show, hide } = React.useContext(TooltipContext);
+      if (value === null || value === undefined) return <td className={className}><span className="cell-na">-</span></td>;
+      return (
+        <td className={`data-cell ${className || ''}`}
+            onMouseEnter={source ? (e) => show(source, e) : undefined}
+            onMouseLeave={source ? hide : undefined}>
+          {value.toFixed(1)}
+        </td>
+      );
+    }
+
     function AnnualForecastTable({ companies, annualData, forecastData }) {
       const years = [2022, 2023, 2024, 2025];
       const forecastYears = [2023, 2024, 2025, 2026, 2027];
-      // 数据库中实际存在的预测季度
       const forecastQuarters = ['2025Q4', '2025Q3', '2025Q2', '2025Q1', '2024Q4', '2024Q3', '2024Q2', '2024Q1', '2023Q4', '2023Q3', '2023Q2', '2023Q1'];
-      
       const companyList = Object.keys(companies || {});
-      
-      const getAnnual = (company, year) => {
-        const data = annualData && annualData[company];
-        if (!data) return null;
-        const found = data.find(d => d.year === year);
-        return found ? found.production_wt : null;
-      };
-      
-      const getForecast = (company, reportQuarter, targetYear) => {
-        const data = forecastData && forecastData[company];
-        if (!data) return null;
-        const found = data.find(d => d.report_quarter === reportQuarter && d.forecast_year === targetYear);
-        return found ? found.production_wt : null;
-      };
-      
-      const calcTotal = (getter, ...args) => {
-        let sum = 0;
-        let hasData = false;
-        companyList.forEach(c => {
-          const val = getter(c, ...args);
-          if (val !== null) {
-            sum += val;
-            hasData = true;
-          }
-        });
-        return hasData ? sum : null;
-      };
-      
+      const getAnnual = (c, y) => { const d = annualData && annualData[c]; if (!d) return null; const f = d.find(x => x.year === y); return f ? f.production_wt : null; };
+      const getAnnualSource = (c, y) => ANNUAL_SOURCES[c] && ANNUAL_SOURCES[c][y];
+      const getForecast = (c, rq, fy) => { const d = forecastData && forecastData[c]; if (!d) return null; const f = d.find(x => x.report_quarter === rq && x.forecast_year === fy); return f ? f.production_wt : null; };
+      const getForecastSource = (c, rq, fy) => FORECAST_SOURCES[c] && FORECAST_SOURCES[c][`${rq}-${fy}`];
+      const calcTotal = (getter, ...args) => { let s = 0, h = false; companyList.forEach(c => { const v = getter(c, ...args); if (v !== null) { s += v; h = true; } }); return h ? s : null; };
       return (
         <div className="table-wrapper">
           <table>
@@ -323,203 +127,92 @@
               <tr>
                 <th rowSpan="2" className="sticky-col">公司</th>
                 {years.map(y => <th key={y} rowSpan="2" className={y === 2025 ? 'col-2024' : ''}>{y}</th>)}
-                {forecastQuarters.map(fq => (
-                  <th key={fq} colSpan="5" className={`header-group ${fq.includes('2025') ? 'header-forecast-q3' : fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1'}`}>
-                    基于{fq}预测
-                  </th>
-                ))}
+                {forecastQuarters.map(fq => <th key={fq} colSpan="5" className={`header-group ${fq.includes('2025') ? 'header-forecast-q3' : fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1'}`}>基于{fq}预测</th>)}
               </tr>
               <tr>
-                {forecastQuarters.map((fq) => 
-                  forecastYears.map((fy) => (
-                    <th key={`${fq}-${fy}`} className={
-                      fq.includes('2025') ? 'header-forecast-q3' :
-                      fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1'
-                    }>{fy}</th>
-                  ))
-                )}
+                {forecastQuarters.map(fq => forecastYears.map(fy => <th key={`${fq}-${fy}`} className={fq.includes('2025') ? 'header-forecast-q3' : fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1'}>{fy}</th>))}
               </tr>
             </thead>
             <tbody>
-              {companyList.map(company => {
-                const info = COMPANIES[company] || { name: company };
+              {companyList.map(c => {
+                const info = COMPANIES[c] || { name: c };
                 return (
-                  <tr key={company}>
+                  <tr key={c}>
                     <td>{info.name}</td>
-                    {years.map(y => {
-                      const val = getAnnual(company, y);
-                      return (
-                        <td key={y} className={y === 2025 ? 'col-2024' : ''}>
-                          {val !== null ? val.toFixed(1) : <span className="cell-na">-</span>}
-                        </td>
-                      );
-                    })}
-                    {forecastQuarters.map((fq) => 
-                      forecastYears.map(fy => {
-                        const val = getForecast(company, fq, fy);
-                        const bgClass = fq.includes('2025') ? 'header-forecast-q3' :
-                                       fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1';
-                        return (
-                          <td key={`${fq}-${fy}`} className={bgClass}>
-                            {val !== null ? val.toFixed(1) : <span className="cell-na">-</span>}
-                          </td>
-                        );
-                      })
-                    )}
+                    {years.map(y => <DataCell key={y} value={getAnnual(c, y)} source={getAnnualSource(c, y)} className={y === 2025 ? 'col-2024' : ''} />)}
+                    {forecastQuarters.map(fq => forecastYears.map(fy => {
+                      const bg = fq.includes('2025') ? 'header-forecast-q3' : fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1';
+                      return <DataCell key={`${fq}-${fy}`} value={getForecast(c, fq, fy)} source={getForecastSource(c, fq, fy)} className={bg} />;
+                    }))}
                   </tr>
                 );
               })}
               <tr className="row-total">
                 <td>产量（万吨）</td>
-                {years.map(y => {
-                  const total = calcTotal(getAnnual, y);
-                  return (
-                    <td key={y} className={y === 2025 ? 'col-2024' : ''}>
-                      {total !== null ? total.toFixed(1) : '-'}
-                    </td>
-                  );
-                })}
-                {forecastQuarters.map((fq) => 
-                  forecastYears.map(fy => {
-                    const total = calcTotal(getForecast, fq, fy);
-                    const bgClass = fq.includes('2025') ? 'header-forecast-q3' :
-                                   fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1';
-                    return (
-                      <td key={`${fq}-${fy}`} className={bgClass}>
-                        {total !== null ? total.toFixed(1) : '-'}
-                      </td>
-                    );
-                  })
-                )}
+                {years.map(y => { const t = calcTotal(getAnnual, y); return <td key={y} className={y === 2025 ? 'col-2024' : ''}>{t !== null ? t.toFixed(1) : '-'}</td>; })}
+                {forecastQuarters.map(fq => forecastYears.map(fy => {
+                  const t = calcTotal(getForecast, fq, fy);
+                  const bg = fq.includes('2025') ? 'header-forecast-q3' : fq.includes('2024') ? 'header-forecast-q2' : 'header-forecast-q1';
+                  return <td key={`${fq}-${fy}`} className={bg}>{t !== null ? t.toFixed(1) : '-'}</td>;
+                }))}
               </tr>
             </tbody>
           </table>
         </div>
       );
     }
-    
-    // 季度产量表格
+
     function QuarterlyTable({ companies, quarterlyData }) {
       const years = [2023, 2024, 2025];
       const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
-      
-      const quarterCols = [];
-      for (const year of years) {
-        for (const q of quarters) {
-          quarterCols.push({ year, q, label: `${q.slice(1)}Q${String(year).slice(2)}` });
-        }
-      }
-      
+      const qCols = [];
+      for (const y of years) for (const q of quarters) qCols.push({ year: y, q, label: `${q.slice(1)}Q${String(y).slice(2)}` });
       const companyList = Object.keys(companies || {});
-      
-      const getQuarter = (company, year, quarter) => {
-        const data = quarterlyData && quarterlyData[company];
-        if (!data || !data[year] || data[year][quarter] === undefined) return null;
-        return data[year][quarter];
-      };
-      
-      const calcTotal = (year, quarter) => {
-        let sum = 0;
-        let hasData = false;
-        companyList.forEach(c => {
-          const val = getQuarter(c, year, quarter);
-          if (val !== null) {
-            sum += val;
-            hasData = true;
-          }
-        });
-        return hasData ? sum : null;
-      };
-      
+      const getQ = (c, y, q) => { const d = quarterlyData && quarterlyData[c]; if (!d || !d[y] || d[y][q] === undefined) return null; return d[y][q]; };
+      const getQSource = (c, y, q) => QUARTERLY_SOURCES[c] && QUARTERLY_SOURCES[c][y] && QUARTERLY_SOURCES[c][y][q];
+      const calcTotal = (y, q) => { let s = 0, h = false; companyList.forEach(c => { const v = getQ(c, y, q); if (v !== null) { s += v; h = true; } }); return h ? s : null; };
       return (
         <div className="table-wrapper">
           <table>
-            <thead>
-              <tr>
-                <th className="sticky-col">公司</th>
-                {quarterCols.map((col, i) => (
-                  <th key={i} className={col.year === 2025 ? 'col-2024' : ''}>
-                    {col.label}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <thead><tr><th className="sticky-col">公司</th>{qCols.map((c, i) => <th key={i} className={c.year === 2025 ? 'col-2024' : ''}>{c.label}</th>)}</tr></thead>
             <tbody>
-              {companyList.map(company => {
-                const info = COMPANIES[company] || { name: company };
-                return (
-                  <tr key={company}>
-                    <td>{info.name}</td>
-                    {quarterCols.map((col, i) => {
-                      const val = getQuarter(company, col.year, col.q);
-                      return (
-                        <td key={i} className={col.year === 2025 ? 'col-2024' : ''}>
-                          {val !== null ? val.toFixed(1) : <span className="cell-na">-</span>}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
+              {companyList.map(c => {
+                const info = COMPANIES[c] || { name: c };
+                return (<tr key={c}><td>{info.name}</td>{qCols.map((col, i) => <DataCell key={i} value={getQ(c, col.year, col.q)} source={getQSource(c, col.year, col.q)} className={col.year === 2025 ? 'col-2024' : ''} />)}</tr>);
               })}
               <tr className="row-total">
                 <td>产量（万吨）</td>
-                {quarterCols.map((col, i) => {
-                  const total = calcTotal(col.year, col.q);
-                  return (
-                    <td key={i} className={col.year === 2025 ? 'col-2024' : ''}>
-                      {total !== null ? total.toFixed(1) : '-'}
-                    </td>
-                  );
-                })}
+                {qCols.map((c, i) => { const t = calcTotal(c.year, c.q); return <td key={i} className={c.year === 2025 ? 'col-2024' : ''}>{t !== null ? t.toFixed(1) : '-'}</td>; })}
               </tr>
             </tbody>
           </table>
         </div>
       );
     }
-    
+
     function App() {
-      const data = {
-        companies: COMPANIES,
-        quarterly: QUARTERLY_DATA,
-        annual: ANNUAL_DATA,
-        forecasts: FORECAST_DATA
-      };
-      
       return (
-        <div className="page">
-          <div className="header">
-            <h1>全球主要铜矿企业产量追踪报告</h1>
-            <div className="subtitle">
-              数据来源: 公司财报 (PDF) | 单位: 万吨 | 更新时间: 2026-02-05
+        <TooltipProvider>
+          <div className="page">
+            <div className="header">
+              <h1>全球主要铜矿企业产量追踪报告</h1>
+              <div className="subtitle">数据来源: 公司财报 (PDF) | 单位: 万吨 | 更新时间: 2026-02-06 | 鼠标悬停数值可查看PDF原文出处（Claude 4.5 Opus智能提取）</div>
+            </div>
+            <div className="section">
+              <div className="section-title">一、年度产量与预测矩阵</div>
+              <AnnualForecastTable companies={COMPANIES} annualData={ANNUAL_DATA} forecastData={FORECAST_DATA} />
+            </div>
+            <div className="section">
+              <div className="section-title">二、季度铜产量明细</div>
+              <QuarterlyTable companies={COMPANIES} quarterlyData={QUARTERLY_DATA} />
+            </div>
+            <div className="footer">
+              数据来源: 公司财报 | 原文提取: Claude 4.5 Opus | 覆盖: AAL, ANTO, FCX, FQM, GLEN
             </div>
           </div>
-          
-          <div className="section">
-            <div className="section-title">一、年度产量与预测矩阵</div>
-            <AnnualForecastTable 
-              companies={data.companies} 
-              annualData={data.annual}
-              forecastData={data.forecasts}
-            />
-          </div>
-          
-          <div className="section">
-            <div className="section-title">二、季度铜产量明细</div>
-            <QuarterlyTable 
-              companies={data.companies} 
-              quarterlyData={data.quarterly}
-            />
-          </div>
-          
-          <div className="footer">
-            数据来源: 公司财报 (10-K/10-Q/年报/季报) | AI提取: Claude Opus 4.5 | 
-            覆盖公司: FCX, AAL, ANTO, FQM, GLEN | 季度57条 | 年度16条 | 预测47条 | 数据已与PDF原文100%核对
-          </div>
-        </div>
+        </TooltipProvider>
       );
     }
-    
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
