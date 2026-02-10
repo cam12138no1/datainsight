@@ -67,7 +67,7 @@
     @keyframes cl-fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .cl-modal { background: #FAF9F7; border-radius: 20px; width: 620px; max-width: 92vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 24px 48px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04); animation: cl-scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes cl-scaleIn { from { transform: scale(0.95) translateY(8px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-    .cl-header { padding: 28px 28px 0; display: flex; align-items: flex-start; justify-content: space-between; }
+    .cl-header { padding: 28px 28px 16px; display: flex; align-items: flex-start; justify-content: space-between; }
     .cl-header h2 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0; letter-spacing: -0.4px; }
     .cl-close { width: 28px; height: 28px; border-radius: 8px; border: none; background: transparent; cursor: pointer; font-size: 16px; color: #aaa; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .cl-close:hover { background: rgba(0,0,0,0.05); color: #555; }
@@ -213,7 +213,7 @@
         const f = d.find(x => x.report_quarter === rq && (x.forecast_year === fy || x.forecast_year === String(fy)));
         return f ? f.production_wt : null;
       };
-      const getForecastSource = (c, rq, fy) => FORECAST_SOURCES[c] && FORECAST_SOURCES[c][`${rq}-${fy}`];
+      const getForecastSource = (c, rq, fy) => FORECAST_SOURCES[c] && FORECAST_SOURCES[c][rq] && FORECAST_SOURCES[c][rq][String(fy)];
       const calcTotal = (getter, ...args) => { let s = 0, h = false; companyList.forEach(c => { const v = getter(c, ...args); if (v !== null) { s += v; h = true; } }); return h ? s : null; };
       return (
         <div className="table-wrapper">
